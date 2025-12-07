@@ -20,7 +20,7 @@ app.config['MONGO_URI'] = os.environ.get('MONGO_URI', 'mongodb+srv://roshan_admi
 
 # Email configuration from environment variables
 EMAIL_USER = os.environ.get('EMAIL_USER', 'roshansasi2018@gmail.com')
-EMAIL_PASS = os.environ.get('EMAIL_PASS', 'gceygbrwjloprtfa')
+EMAIL_PASS = os.environ.get('EMAIL_PASS', 'kvggciqblpulfspw')
 
 # Initialize MongoDB with error handling
 try:
