@@ -11,10 +11,16 @@ from email import encoders
 import os
 
 app = Flask(__name__)
-app.secret_key = 'roshan_tech_secret_key_2024'
 
-# MongoDB Atlas Configuration
-app.config['MONGO_URI'] = 'mongodb+srv://roshan_admin:W9KKFwJg0jeOJPNm@cluster0.rqu4lvj.mongodb.net/roshan_tech_db'
+# Load from environment variables for security
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'roshan_tech_secret_key_2024')
+
+# MongoDB Atlas Configuration - from environment variable
+app.config['MONGO_URI'] = os.environ.get('MONGO_URI', 'mongodb+srv://roshan_admin:W9KKFwJg0jeOJPNm@cluster0.rqu4lvj.mongodb.net/roshan_tech_db')
+
+# Email configuration from environment variables
+EMAIL_USER = os.environ.get('EMAIL_USER', '')
+EMAIL_PASS = os.environ.get('EMAIL_PASS', '')
 
 # Initialize MongoDB with error handling
 try:
@@ -29,13 +35,18 @@ def send_otp(email, otp):
     """Send OTP with HTML email template"""
     try:
         print(f"Sending OTP {otp} to {email}")
+        
+        # Check if email credentials are configured
+        if not EMAIL_USER or not EMAIL_PASS:
+            print("❌ Email credentials not configured in environment variables")
+            return False
          
         message = MIMEMultipart('alternative')
         message['Subject'] = 'ROSHAN TECHNOLOGIES - Email Verification'
-        message['From'] = 'roshansasi2018@gmail.com'
+        message['From'] = EMAIL_USER
         message['To'] = email
         logo_url = "https://i.ibb.co/27h5cMnt/logo.png"
-        # Create email message
+        
         # Create HTML email body
         html_body = f"""
         <!DOCTYPE html>
@@ -285,10 +296,10 @@ def send_otp(email, otp):
                 <div class="email-content">
                     <!-- Logo Section -->
                     <div class="logo-section">
-    <img src="{logo_url}" alt="Roshan Technologies Logo" style="width: 80px; height: auto; margin-bottom: 15px;">
-    <div class="company-name">Roshan Technologies</div>
-    <div class="tagline">Innovate. Elevate. Dominate.</div>
-</div>
+                        <img src="{logo_url}" alt="Roshan Technologies Logo" style="width: 80px; height: auto; margin-bottom: 15px;">
+                        <div class="company-name">Roshan Technologies</div>
+                        <div class="tagline">Innovate. Elevate. Dominate.</div>
+                    </div>
            
                     
                     <!-- Main Content -->
@@ -353,12 +364,10 @@ def send_otp(email, otp):
         msg_alternative = MIMEText(html_body, 'html')
         message.attach(msg_alternative)
         
-        # Send email
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login('roshansasi2018@gmail.com', 'niwdnhxgwrwsmpfm')
-        server.sendmail('roshansasi2018@gmail.com', email, message.as_string())
-        server.quit()
+        # Send email using SSL with timeout (more reliable on Render)
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=10) as server:
+            server.login(EMAIL_USER, EMAIL_PASS)
+            server.sendmail(EMAIL_USER, email, message.as_string())
         
         print(f"✅ OTP sent successfully to {email}")
         return True
@@ -446,6 +455,7 @@ def signup():
             'password': hashed_password
         }
         
+        # Send OTP - check return value instead of calling sys.exit()
         if send_otp(email, otp):
             flash("Verification code sent to your email!", "success")
             return redirect(url_for('verify_email'))
@@ -564,4 +574,4 @@ def health_check():
         return f"❌ Database Error: {str(e)}", 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
