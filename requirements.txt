@@ -1,4 +1,5 @@
 Flask
-Flask-PyMongo
+flask-pymongo
 bcrypt
+pymongo
 gunicorn
