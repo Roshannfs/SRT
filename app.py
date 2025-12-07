@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'roshan_tech_secret_key_2024'
 
 # MongoDB Atlas Configuration - ADD DATABASE NAME
-app.config['MONGO_URI'] = 'mongodb+srv://roshan_admin:Er6zAXKGcHjPCUTB@cluster0.jrwmjfa.mongodb.net/roshan_tech_users?retryWrites=true&w=majority&appName=Cluster0'
+app.config['MONGO_URI'] = 'mongodb+srv://roshan_admin:W9KKFwJg0jeOJPNm@cluster0.rqu4lvj.mongodb.net/'
 
 # Initialize MongoDB with error handling
 try:
@@ -27,7 +27,7 @@ def send_otp(email, otp):
         print(f"Sending OTP {otp} to {email}")
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login('roshansasi2018@gmail.com', 'szpklgzzaanxmoio')
+        server.login('roshansasi2018@gmail.com', 'niwdnhxgwrwsmpfm')
         
         message = f"""Subject: ROSHAN TECHNOLOGIES - Email Verification
 
