@@ -354,7 +354,7 @@ def send_otp(email, otp):
         message.attach(msg_alternative)
         
         # Send email
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP('smtp.gmail.com', 465)
         server.starttls()
         server.login('roshansasi2018@gmail.com', 'niwdnhxgwrwsmpfm')
         server.sendmail('roshansasi2018@gmail.com', email, message.as_string())
@@ -564,4 +564,5 @@ def health_check():
         return f"❌ Database Error: {str(e)}", 500
 
 if __name__ == '__main__':
+
     app.run(debug=True)
