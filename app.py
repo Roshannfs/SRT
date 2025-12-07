@@ -19,8 +19,8 @@ app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'roshan_tech_secret_key_2024
 app.config['MONGO_URI'] = os.environ.get('MONGO_URI', 'mongodb+srv://roshan_admin:W9KKFwJg0jeOJPNm@cluster0.rqu4lvj.mongodb.net/roshan_tech_db')
 
 # Email configuration from environment variables
-EMAIL_USER = os.environ.get('EMAIL_USER', '')
-EMAIL_PASS = os.environ.get('EMAIL_PASS', '')
+EMAIL_USER = os.environ.get('EMAIL_USER', 'roshansasi2018@gmail.com')
+EMAIL_PASS = os.environ.get('EMAIL_PASS', 'gceygbrwjloprtfa')
 
 # Initialize MongoDB with error handling
 try:
