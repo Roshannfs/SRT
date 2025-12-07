@@ -3,8 +3,6 @@ from flask_pymongo import PyMongo
 import bcrypt
 import random
 import smtplib
-from dotenv import load_dotenv
-load_dotenv()
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
