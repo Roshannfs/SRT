@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'roshan_tech_secret_key_2024'
 
 # MongoDB Atlas Configuration - ADD DATABASE NAME
-app.config['MONGO_URI'] = 'mongodb+srv://roshan_admin:W9KKFwJg0jeOJPNm@cluster0.rqu4lvj.mongodb.net/'
+app.config['MONGO_URI'] = 'mongodb+srv://roshan_admin:W9KKFwJg0jeOJPNm@cluster0.rqu4lvj.mongodb.net/roshan_tech_db'
 
 # Initialize MongoDB with error handling
 try:
